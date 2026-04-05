@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package fixbug;//相当于namespace
+
+option cc_generic_services = true;
+
+message LoginRequest{//相当于创建一个c++类
+    bytes name = 1;
+    bytes pwd = 2;
+}
+
+message ResultCode{
+    int32 errcode = 1;
+    bytes errmsg = 2;
+}
+
+message LoginResponse{
+    ResultCode result = 1;
+    bool success = 2;
+}
+
+message User{
+    bytes name = 1;
+    uint32 age = 2;
+    enum Sex{
+        MAN = 0;
+        WOMAN = 1;
+    }
+    Sex sex = 3;
+}
+
+message GetFriendListResponse{
+    ResultCode result = 1;
+    repeated User friend_list = 2;
+}
+
+
+service UserServiceRpc{
+    rpc Login(LoginRequest) returns(LoginResponse);
+    //rpc GetFriendLists() returns(GetFriendListResponse);
+}
